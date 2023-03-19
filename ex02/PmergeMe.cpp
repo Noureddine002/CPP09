@@ -87,7 +87,7 @@ void PmergeMe::sortVector(std::vector<int> & my_vec)
     merge_sortVector(my_vec, 0, my_vec.size() - 1);
     gettimeofday(&end_time, NULL);
     long elapsed_time = ((end_time.tv_sec - start_time.tv_sec) * 1000000) + end_time.tv_usec - start_time.tv_usec;
-    this->elapsed_time_vec = static_cast<double>(elapsed_time) / my_vec.size();
+    this->elapsed_time_vec = static_cast<double>(elapsed_time);
 }
 
 void PmergeMe::fill_vector(int num)
