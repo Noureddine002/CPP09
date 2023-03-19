@@ -29,12 +29,10 @@ int BitcoinExchange::btc_readFromData_CSV(std::string csv_file)
             std::getline(data_csv, line); // Read the first line and ignore it
             while(std::getline(data_csv, line))
             {
-                std::istringstream ss(line);
-                std::string key;
-                float value;
-                std::getline(ss, key, ',');
-                std::getline(ss, line, ',');
-                value = std::atof(line.c_str());
+                std::string::size_type pos = line.find(",");
+                std::string key = line.substr(0, pos);
+                std::string value_str = line.substr(pos + 1);
+                float value = atof(value_str.c_str());
                 this->data_csv[key] = value;
             }
         }
