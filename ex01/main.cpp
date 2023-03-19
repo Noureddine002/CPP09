@@ -1,19 +1,15 @@
 #include "RPN.hpp"
-#include <iostream>
 
-int main(int argc, char *argv[]) 
+int main(int ac, char **av) 
 {
-    if (argc != 2) 
+    if(ac == 2)
     {
-        std::cerr << "Usage: " << argv[0] << " <expression>\n";
-        return 1;
+        RPN op;
+        op.operate(av[1]);
     }
-    std::string expression(argv[1]);
-    int result = evaluateRPN(expression);
-    if (result == 0) {
-        std::cerr << "Error\n";
-    return 1;
+    else
+    {
+        std::cerr << "The number or args is WRONG !" << std::endl;
     }
-    std::cout << result << "\n";
     return 0;
 }

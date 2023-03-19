@@ -1,13 +1,22 @@
-all: RPN
+NAME = RPN
+CFLAGS = -Wall -Wextra -Werror -std=c++98
+CC = c++
 
-RPN: main.o RPN.o
-	g++ -o RPN main.o RPN.o
+SRCS = main.cpp RPN.cpp
+OBJS = $(SRCS:.cpp=.o)
 
-main.o: main.cpp RPN.hpp
-	g++ -c main.cpp
+$(NAME) : $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-RPN.o: RPN.cpp RPN.hpp
-	g++ -c RPN.cpp
+all : $(NAME)
 
-clean:
-	rm -f RPN *.o
+%.o:%.cpp RPN.hpp
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+clean :
+	rm -rf *.o
+
+fclean : clean
+	rm -rf $(NAME)
+
+re : fclean all

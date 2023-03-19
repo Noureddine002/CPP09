@@ -3,7 +3,19 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
+#include <stack>
 
-int evaluateRPN(std::string expression);
+class RPN
+{
+    private:
+        std::stack <int> st;
+    public:
+        RPN();
+        RPN(const RPN & cp);
+        RPN & operator= (const RPN & cp);
+        ~RPN();
+        void operate(std::string str);
+};
 
-#endif // RPN_HPP
+#endif 

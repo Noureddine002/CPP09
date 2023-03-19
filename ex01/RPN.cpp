@@ -1,59 +1,69 @@
 #include "RPN.hpp"
-#include <stack>
 
-int evaluateRPN(std::string expression) {
-    std::stack<int> st;
-    int a, b;
-    char op;
-    std::stringstream ss(expression);
-    while (ss >> op) {
-        if (isdigit(op)) {
-            st.push(op - '0');
-        } else if (op == '+') {
-            if (st.size() < 2) {
-                return 0; // error: not enough operands
+RPN::RPN() {};
+
+RPN::RPN(const RPN & cp)
+{
+    this->st = cp.st;
+}
+
+RPN & RPN::operator= (const RPN & cp)
+{
+    this->st = cp.st;
+    return *this;
+}
+
+RPN::~RPN() {};
+
+void RPN::operate(std::string str)
+{
+    int len = str.length();
+    for (int i = 0; i < len; i++) 
+    {
+        if (str[i] == ' ')
+            continue;
+        else if (isdigit(str[i])) 
+        {
+            this->st.push(str[i] - '0');
+        }
+        else if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') 
+        {
+            if (this->st.size() < 2) 
+            {
+                std::cout << "Error: Insufficient operands for operator " << str[i] <<  std::endl;
+                return;
             }
-            b = st.top();
-            st.pop();
-            a = st.top();
-            st.pop();
-            st.push(a + b);
-        } else if (op == '-') {
-            if (st.size() < 2) {
-                return 0; // error: not enough operands
+            int a = this->st.top();
+            this->st.pop();
+            int b = this->st.top();
+            this->st.pop();
+            int result;
+            switch(str[i]) 
+            {
+                case '+': result = b + a; break;
+                case '-': result = b - a; break;
+                case '*': result = b * a; break;
+                case '/': 
+                    if (a == 0) 
+                    {
+                        std::cout << "Error: Division by zero" <<  std::endl;
+                        return;
+                    }
+                    result = b / a; break;
+                default: break;
             }
-            b = st.top();
-            st.pop();
-            a = st.top();
-            st.pop();
-            st.push(a - b);
-        } else if (op == '*') {
-            if (st.size() < 2) {
-                return 0; // error: not enough operands
-            }
-            b = st.top();
-            st.pop();
-            a = st.top();
-            st.pop();
-            st.push(a * b);
-        } else if (op == '/') {
-            if (st.size() < 2) {
-                return 0; // error: not enough operands
-            }
-            b = st.top();
-            st.pop();
-            a = st.top();
-            st.pop();
-            if (b == 0) {
-                return 0; // error: division by zero
-            }
-            st.push(a / b);
-        } else {
-            return 0; // error: invalid operator
+            this->st.push(result);
+        }
+        else 
+        {
+            std::cout << "Error: Invalid character " << str[i] << std::endl;
+            return;
         }
     }
-    if (st.size() != 1) {
-        return 0; // error: too many operands
+    if (this->st.size() != 1) 
+    {
+        std::cout << "Error: Invalid expression" << std::endl;
+        return;
     }
-    return st.top();
+    std::cout << this->st.top() << std::endl;
 }
