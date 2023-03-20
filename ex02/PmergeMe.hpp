@@ -23,6 +23,7 @@ class PmergeMe
         void sortDeque(std::deque<int> & my_deq);
         void print_vector(std::vector<int> & my_vec);
         void fill_vector(int num);
+        void fill_deque(int num);
 };
 
 #endif

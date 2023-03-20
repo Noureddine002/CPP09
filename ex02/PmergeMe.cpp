@@ -19,7 +19,8 @@ PmergeMe::~PmergeMe() {};
 
 // functions for merge / sort the vector :
 
-void sort_insert(std::vector<int> & my_vec, int start, int midle ,int end)
+template <typename Container>
+void sort_insert(Container & my_container, int start, int midle , int end)
 {
     int i = start;
     int j = midle + 1;
@@ -28,34 +29,34 @@ void sort_insert(std::vector<int> & my_vec, int start, int midle ,int end)
 
     while(i <= midle && j <= end)
     {
-        if(my_vec[i] <= my_vec[j])
+        if(my_container[i] <= my_container[j])
         {
-            tmp[k] = my_vec[i];
+            tmp[k] = my_container[i];
             k++;
             i++;     
         }
         else
         {
-            tmp[k] = my_vec[j];
+            tmp[k] = my_container[j];
             k++;
             j++;
         }
     }
     while(i <= midle)
     {
-        tmp[k] = my_vec[i];
+        tmp[k] = my_container[i];
         k++;
         i++;
     }
     while(j <= end)
     {
-        tmp[k] = my_vec[j];
+        tmp[k] = my_container[j];
         k++;
         j++;
     }
     for(int a = start; a <= end; a++)
     {
-        my_vec[a] = tmp[a];
+        my_container[a] = tmp[a];
     }
 }
 
@@ -68,6 +69,18 @@ void merge_sortVector(std::vector<int> & my_vec, int start, int end)
         merge_sortVector(my_vec, start, midle);
         merge_sortVector(my_vec, midle + 1, end);
         sort_insert(my_vec, start, midle, end);
+    }
+}
+
+void merge_sortDeque(std::deque<int> & my_deq, int start, int end)
+{
+    if(start < end)
+    {
+        int midle; // to get the midle of the deque
+        midle = (start + end) / 2;
+        merge_sortDeque(my_deq, start, midle);
+        merge_sortDeque(my_deq, midle + 1, end);
+        sort_insert(my_deq, start, midle, end);
     }
 }
 
@@ -90,7 +103,22 @@ void PmergeMe::sortVector(std::vector<int> & my_vec)
     this->elapsed_time_vec = static_cast<double>(elapsed_time);
 }
 
+void PmergeMe::sortDeque(std::deque<int> & my_deq)
+{
+    timeval start_time, end_time;
+    gettimeofday(&start_time, NULL);
+    merge_sortDeque(my_deq, 0, my_deq.size() - 1);
+    gettimeofday(&end_time, NULL);
+    long elapsed_time = ((end_time.tv_sec - start_time.tv_sec) * 1000000) + end_time.tv_usec - start_time.tv_usec;
+    this->elapsed_time_deq = static_cast<double>(elapsed_time);
+}
+
 void PmergeMe::fill_vector(int num)
 {
     this->vec_nums.push_back(num);
+}
+
+void PmergeMe::fill_deque(int num)
+{
+    this->deq_nums.push_back(num);
 }

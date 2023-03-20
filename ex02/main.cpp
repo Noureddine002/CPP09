@@ -31,14 +31,15 @@ int main(int ac, char **av)
     {
         std::cout << av[i] << " ";
         pme.fill_vector(atoi(av[i]));
-        //fill the deque later
+        pme.fill_deque(atoi(av[i]));
         i++;
     }
     std::cout << std::endl;
     pme.sortVector(pme.vec_nums);
+    pme.sortDeque(pme.deq_nums);
     std::cout << "After: ";
     pme.print_vector(pme.vec_nums);
-    std::cout << "Time to process a range of " << pme.vec_nums.size()  << " elements with std::vector: " << pme.elapsed_time_vec << " us" << std::endl;
-    //add later time elapse of deque
+    std::cout << "Time to process a range of " << pme.vec_nums.size()  << " elements with std::vector: " << std::fixed << pme.elapsed_time_vec << " us" << std::endl;
+    std::cout << "Time to process a range of " << pme.deq_nums.size()  << " elements with std::deque: " << std::fixed << pme.elapsed_time_deq << " us" << std::endl;
     return 0;
 }
