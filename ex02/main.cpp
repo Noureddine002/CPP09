@@ -4,8 +4,13 @@ bool is_correct(int ac, char **av)
 {
     for(int i = 1; i < ac; i++)
     {
-        if(!std::isdigit(av[i][0]))
-            return false;
+        int j = 0;
+        while(av[i][j])
+        {
+            if(!std::isdigit(av[i][j]))
+                return false;
+            j++;
+        }
         if(atoi(av[i]) < 0)
             return false;
     }
