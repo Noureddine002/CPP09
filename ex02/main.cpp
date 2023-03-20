@@ -11,7 +11,7 @@ bool is_correct(int ac, char **av)
                 return false;
             j++;
         }
-        if(atoi(av[i]) < 0)
+        if(atoi(av[i]) < 0 || atoi(av[i]) > 2147483647)
             return false;
     }
     return true;
