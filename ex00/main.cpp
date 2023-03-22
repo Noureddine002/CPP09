@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ntanjaou <ntanjaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 15:05:17 by ntanjaou          #+#    #+#             */
+/*   Updated: 2023/03/22 15:05:18 by ntanjaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "BitcoinExchange.hpp"
 
 bool check_y_m_d(std::string year, std::string month, std::string day)
@@ -52,12 +65,14 @@ int check_value_str(std::string value)
 	int k = 0;
 	while(value[i])
 	{
-		if(value[i] != '.' && !isdigit(value[i]))
+		if(value[i] != '.' && value[i] != ',' && !isdigit(value[i]))
 		{
 			return 0;
 		}
-		if (value[i] == '.')
+		if (value[i] == '.' || value[i] == ',')
+		{
 			k++;
+		}
 		i++;
 	}
 	if(k > 1)
@@ -77,15 +92,21 @@ int main(int ac, char **av)
 		std::ifstream file_txt(av[1]);
 		if(file_txt.fail())
 		{
-			std::cerr << "Could not open the FILE" << av[1] << "check again !" << std::endl;
+			std::cerr << "Could not open the FILE" << av[1] << " check again !" << std::endl;
 			return 0;
 		}
 		else
 		{
 			std::string line;
-			std::getline(file_txt, line); // Read the first line and ignore it
+			//std::getline(file_txt, line); // Read the first line and ignore it
+			int a = 0;
 			while(std::getline(file_txt, line))
 			{
+				if(line == "date | value" && a == 0)
+				{
+					a = 1;
+					continue;
+				}
 				int i = 0;
 				int k = 0;
 				while(line[i])
@@ -118,6 +139,13 @@ int main(int ac, char **av)
 				{
 					std::cerr << "Error: bad input => " << line << std::endl;
 					continue;
+				}
+				int a = 0;
+				while(token[a])
+				{
+					if(token[a] == ',')
+						token[a] = '.';
+					a++;
 				}
 				float value = std::atof(token);
 				if(!check_date(date))

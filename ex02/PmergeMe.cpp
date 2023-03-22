@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ntanjaou <ntanjaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 15:06:08 by ntanjaou          #+#    #+#             */
+/*   Updated: 2023/03/22 15:06:09 by ntanjaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe() {};
@@ -16,8 +28,6 @@ PmergeMe & PmergeMe::operator=(const PmergeMe & cp)
 }
 
 PmergeMe::~PmergeMe() {};
-
-// functions for merge / sort the vector :
 
 template <typename Container>
 void sort_insert(Container & my_container, int start, int midle , int end)

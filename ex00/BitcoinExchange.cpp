@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ntanjaou <ntanjaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 15:05:01 by ntanjaou          #+#    #+#             */
+/*   Updated: 2023/03/22 15:05:02 by ntanjaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 
 BitcoinExchange::BitcoinExchange() {};
@@ -50,5 +62,6 @@ void BitcoinExchange::printData_CSV()
 
 void BitcoinExchange::printData_CSV_fileTXT(std::string date, float value)
 {
-    std::cout << date << " => " << value << " = " << (this->data_csv.lower_bound(date)->second * value) << std::endl;
+    double result = this->data_csv.lower_bound(date)->second * value;
+    std::cout << std::fixed << std::setprecision(2) << date << " => " << value << " = " << result << std::endl;
 }
