@@ -34,9 +34,19 @@ void RPN::operate(std::string str)
     {
         if (str[i] == ' ')
             continue;
-        else if (isdigit(str[i])) 
+        else if (isdigit(str[i]) || (str[i] == '-' && isdigit(str[i+1]) && i+1 < len)) 
         {
-            this->st.push(str[i] - '0');
+            int num = 0;
+            if (str[i] == '-') 
+            {
+                num = (str[i + 1] - '0') * (-1);
+                i++;
+            }
+            else 
+            {
+                num = str[i] - '0';
+            }
+            this->st.push(num);
         }
         else if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') 
         {
